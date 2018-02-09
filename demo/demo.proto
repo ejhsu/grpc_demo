@@ -1,0 +1,45 @@
+syntax = "proto3";
+
+package helloworld;
+
+// The demo service definition.
+service Demo {
+  // unary
+  rpc HelloOnce (HelloRequest) returns (HelloResponse) {}
+  // Response-streaming RPC
+  rpc LotsOfReplies (HelloRequest) returns (stream HelloResponse) {}
+  // Request-streaming RPC
+  rpc LotsOfHello (stream HelloRequest) returns (HelloResponse) {}
+  // Bidirectional streaming RPC
+  rpc RepeatBot (stream HelloRequest) returns (stream HelloResponse) {}
+}
+
+// The request message
+message HelloRequest {
+  string message = 1;
+}
+
+// The response message
+message HelloResponse {
+  string message = 1;
+}
+
+message Person {
+  string name = 1;
+  int32 id = 2;
+  string email = 3;
+
+  enum PhoneType {
+    UNKNOWN = 0;
+    MOBILE = 1;
+    HOME = 2;
+    WORK = 3;
+  }
+
+  message PhoneNumber {
+    string number = 1;
+    PhoneType type = 2;
+  }
+
+  repeated PhoneNumber phones = 4;
+}
